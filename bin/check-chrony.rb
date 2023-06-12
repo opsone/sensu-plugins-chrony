@@ -60,8 +60,6 @@ class CheckChrony < Sensu::Plugin::Check::CLI
       elsif stratum >= config[:warn_stratum]
         msg += ", expected < #{config[:warn_stratum]}"
         warning msg
-      else
-        ok msg
       end
     else
       unknown 'Failed to look up NTP stratum'
@@ -82,61 +80,5 @@ class CheckChrony < Sensu::Plugin::Check::CLI
     else
       unknown 'Failed to look up NTP offset'
     end
-
-    if status
-      msg = "NTP status is '#{status}'"
-
-      if status != 'normal'
-        msg += ', expected \'Normal\''
-        critical msg
-      else
-        ok msg
-      end
-    else
-      unknown 'Failed to look up NTP status'
-    end
-  end
-
-  private
-
-  def send_client_socket(data)
-    sock = UDPSocket.new
-    sock.send("#{data}\n", 0, '127.0.0.1', 3030)
-  end
-
-  def send_ok(check_name, msg)
-    event = {
-      'name' => check_name,
-      'status' => 0,
-      'output' => "#{self.class.name} OK: #{msg}"
-    }
-    send_client_socket(event.to_json)
-  end
-
-  def send_warning(check_name, msg)
-    event = {
-      'name' => check_name,
-      'status' => 1,
-      'output' => "#{self.class.name} WARNING: #{msg}"
-    }
-    send_client_socket(event.to_json)
-  end
-
-  def send_critical(check_name, msg)
-    event = {
-      'name' => check_name,
-      'status' => 2,
-      'output' => "#{self.class.name} CRITICAL: #{msg}"
-    }
-    send_client_socket(event.to_json)
-  end
-
-  def send_unknown(check_name, msg)
-    event = {
-      'name' => check_name,
-      'status' => 3,
-      'output' => "#{self.class.name} UNKNOWN: #{msg}"
-    }
-    send_client_socket(event.to_json)
   end
 end
