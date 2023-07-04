@@ -1,6 +1,6 @@
 FROM sensu-ruby32-runtime-3.2.2-debian10:0.1.2
 ARG ASSET_GEM=sensu-plugins-chrony
-ARG GIT_REF=9247833830bf37d03456146588590333a447416a
+ARG GIT_REF=5228dae4548d029b9283050fd2827ca65e123053
 ARG GIT_REPO=https://github.com/opsone/sensu-plugins-chrony.git
 
 WORKDIR /assets/build/
