@@ -11,8 +11,8 @@ task :build_assets do
   version = Sensu::Plugins::Chrony::VERSION
 
   %w[debian13 debian12 debian11 debian10].each do |platform|
-    `docker build -t ruby-plugin-#{platform} -f Dockerfile.#{platform} .`
-    `docker run -v "$PWD/assets:/tmp/assets" ruby-plugin-#{platform} cp /assets/sensu-plugins-chrony.tar.gz /tmp/assets/sensu-plugins-chrony_#{version}_#{platform}_linux_amd64.tar.gz`
+    `docker build --platform linux/amd64 -t ruby-plugin-#{platform} -f Dockerfile.#{platform} .`
+    `docker run --platform linux/amd64 -v "$PWD/assets:/tmp/assets" ruby-plugin-#{platform} cp /assets/sensu-plugins-chrony.tar.gz /tmp/assets/sensu-plugins-chrony_#{version}_#{platform}_linux_amd64.tar.gz`
     `docker rm $(docker ps -a -q --filter ancestor=ruby-plugin-#{platform})`
     `docker rmi ruby-plugin-#{platform}`
   end
