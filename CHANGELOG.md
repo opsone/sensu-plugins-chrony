@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 0.2.0
+## [0.2.0] - 2026-11-02
 
 ### Changed
 - Rewritten in Go: static binary `check-chrony` (was `check-chrony.rb`), no Ruby runtime, one asset for every Debian release.
