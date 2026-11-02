@@ -1,2 +1,6 @@
+dist/
+/check-chrony
+/integration/check-chrony
+
+# Former Ruby release artifacts
 /assets/
-/Gemfile.lock
